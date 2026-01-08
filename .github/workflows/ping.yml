@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Curl Render Webhook
-        run: curl -s -o /dev/null -w "%{http_code}" "$PING_URL"
+        run: curl -s -o /dev/null -w "%{http_code}" "https://bot-u0rw.onrender.com"
