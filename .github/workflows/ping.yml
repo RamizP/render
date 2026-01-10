@@ -2,7 +2,7 @@ name: Render KeepAlive
 
 on:
   schedule:
-    - cron: "*/7 * * * *"   # каждые 7 минут
+    - cron: "*/5 * * * *"   # каждые 7 минут
   workflow_dispatch:        # чтобы можно было запустить руками
 
 jobs:
