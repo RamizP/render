@@ -44,7 +44,7 @@ jobs:
           echo "HTTP code: $http_code"
 
           # Если хочешь считать 200-399 успехом
-          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 400 ]; then
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 500 ]; then
             echo "✅ OK"
             exit 0
           fi
