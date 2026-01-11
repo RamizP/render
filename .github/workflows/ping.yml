@@ -2,7 +2,7 @@ name: Render KeepAlive
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # каждые 5 минут (best-effort у GitHub)
+    - cron: "*/3 * * * *"  # каждые 5 минут (best-effort у GitHub)
   workflow_dispatch:
 
 # чтобы не накапливались запуски, если GitHub задержал расписание
@@ -23,7 +23,7 @@ jobs:
         env:
           URL: "https://bot-u0rw.onrender.com"
         run: |
-          echo "Pinging: $URL"
+          echo "Pinging: https://bot-u0rw.onrender.com"
 
           # Важно: таймауты, чтобы workflow не висел из-за сети/холодного старта
           # -L: follow redirects
@@ -39,7 +39,7 @@ jobs:
             --retry-all-errors \
             --retry-delay 2 \
             -w "%{http_code}" \
-            "$URL")
+            "https://bot-u0rw.onrender.com")
 
           echo "HTTP code: $http_code"
 
