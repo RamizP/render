@@ -2,52 +2,12 @@ name: Render KeepAlive
 
 on:
   schedule:
-    - cron: "*/3 * * * *"  # каждые 5 минут (best-effort у GitHub)
-  workflow_dispatch:
-
-# чтобы не накапливались запуски, если GitHub задержал расписание
-concurrency:
-  group: render-keepalive
-  cancel-in-progress: true
+    - cron: "*/7 * * * *"   # каждые 7 минут
+  workflow_dispatch:        # чтобы можно было запустить руками
 
 jobs:
   ping:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
-
     steps:
-      - name: Show current UTC time
-        run: date -u
-
-      - name: Ping Render (healthcheck)
-        env:
-          URL: "https://bot-u0rw.onrender.com"
-        run: |
-          echo "Pinging: https://bot-u0rw.onrender.com"
-
-          # Важно: таймауты, чтобы workflow не висел из-за сети/холодного старта
-          # -L: follow redirects
-          # --connect-timeout: таймаут на установку соединения
-          # --max-time: общий таймаут на запрос
-          # --retry: несколько попыток если временно глючит сеть
-          # --retry-all-errors: ретраить на большинство сетевых ошибок
-          # --retry-delay: задержка между попытками
-          http_code=$(curl -L -sS -o /dev/null \
-            --connect-timeout 5 \
-            --max-time 15 \
-            --retry 2 \
-            --retry-all-errors \
-            --retry-delay 2 \
-            -w "%{http_code}" \
-            "https://bot-u0rw.onrender.com")
-
-          echo "HTTP code: $http_code"
-
-          # Если хочешь считать 200-399 успехом
-          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 500 ]; then
-            echo "✅ OK"
-            exit 0
-          fi
-
-          echo "❌ Ping failed with HTTP $http_code"
-          exit 1
+      - name: Curl Render Webhook
+        run: curl -s -o /dev/null -w "%{http_code}" "https://bot-u0rw.onrender.com"
