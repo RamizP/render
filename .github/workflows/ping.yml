@@ -2,12 +2,17 @@ name: Render KeepAlive
 
 on:
   schedule:
-    - cron: "*/7 * * * *"   # каждые 7 минут
-  workflow_dispatch:        # чтобы можно было запустить руками
+    - cron: "*/5 * * * *"   # каждые 7 минут
+  workflow_dispatch:        # чтобы можно было запустить вручную
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Curl Render Webhook
-        run: curl -s -o /dev/null -w "%{http_code}" "https://bot-u0rw.onrender.com"
+      - name: Ping Render App
+        run: |
+          echo "Pinging bot-u0rw.onrender.com..."
+          curl -s -o /dev/null -w "%{http_code}" "https://bot-u0rw.onrender.com"
+          
+          echo "Pinging emailer-rys0.onrender.com..."
+          curl -s -o /dev/null -w "%{http_code}" "https://emailer-rys0.onrender.com"
