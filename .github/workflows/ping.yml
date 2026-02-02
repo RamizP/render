@@ -2,7 +2,7 @@ name: Render KeepAlive
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # каждые 7 минут
+    - cron: "*/5 * * * *"   # каждые 5 минут
   workflow_dispatch:        # чтобы можно было запустить вручную
 
 jobs:
@@ -13,6 +13,3 @@ jobs:
         run: |
           echo "Pinging bot-u0rw.onrender.com..."
           curl -s -o /dev/null -w "%{http_code}" "https://bot-u0rw.onrender.com"
-          
-          echo "Pinging emailer-rys0.onrender.com..."
-          curl -s -o /dev/null -w "%{http_code}" "https://emailer-rys0.onrender.com"
